@@ -1,7 +1,7 @@
 # Nmap-dictionary
 Nmap commands from beginner level to advanced level that are categorized in the most simple way 
 
-
+> 📄 **Quick Reference:** [One-page cheat sheet](QUICKREF.md) for the most common commands.
 
 ## 📖 Table of Contents
 
