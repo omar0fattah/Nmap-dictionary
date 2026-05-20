@@ -33,7 +33,7 @@ Nmap commands from beginner level to advanced level that are categorized in the 
 
 14. [Advanced Output Parsing](#14-advanced-output-parsing)
 
-15. [Scan Automation](#15-scan-automation)
+15. [Scan Automation](#15-SCAN AUTOMATION-(more-than-1-network-scanning)
 
 16. [Defense (Identifying Enemies)](#16-defense-identifying-enemies)
 
@@ -383,15 +383,13 @@ grep "open" scan.txt | awk '{print $3}' | sort | uniq -c | sort -rn > service_co
 ## 15. SCAN AUTOMATION (more than 1 network scanning)
 
 - Scan multiple subnets from a list
-while read subnet do
-
-   nmap -sn $subnet -oG "scan_$(echo $subnet | tr '/' '_').grep"
+while read subnet do:
+nmap -sn $subnet -oG "scan_$(echo $subnet | tr '/' '_').grep"
 done < subnets.txt
 
 - Scan all hosts from a list
 while read ip do
-
-   nmap -sV -T4 $ip -oN "scan_${ip}.txt"
+nmap -sV -T4 $ip -oN "scan_${ip}.txt"
 done < ip_list.txt
 
 - Parallel scanning (faster, but more aggressive)
