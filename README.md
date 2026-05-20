@@ -31,9 +31,9 @@ Nmap commands from beginner level to advanced level that are categorized in the 
 
 13. [NSE Script Development](#13-nse-script-development)
 
-14. [Advanced Output Parsing](#14-advanced-output-parsing)
+14. [Advanced Output Parsing](#14-advanced-output-parsing-1000-hosts)
 
-15. [Scan Automation](#15-SCAN AUTOMATION-(more-than-1-network-scanning)
+15. [Scan Automation](#15-scan-automation-multiple-networks)
 
 16. [Defense (Identifying Enemies)](#16-defense-identifying-enemies)
 
@@ -380,16 +380,17 @@ grep "open" scan.txt | awk '{print $3}' | sort | uniq -c | sort -rn > service_co
 [🔝 Back to Top](#📖-table-of-contents)
 
 
-## 15. SCAN AUTOMATION (more than 1 network scanning)
+## 15. Scan Automation (multiple networks)
 
-- Scan multiple subnets from a list
-while read subnet do:
-nmap -sn $subnet -oG "scan_$(echo $subnet | tr '/' '_').grep"
-done < subnets.txt
+- **Scan multiple subnets from a list**
+  ```bash
+  while read subnet; do
+      nmap -sn "$subnet" -oG "scan_$(echo "$subnet" | tr '/' '_').grep"
+  done < subnets.txt
 
 - Scan all hosts from a list
-while read ip do
-nmap -sV -T4 $ip -oN "scan_${ip}.txt"
+while read ip; do
+    nmap -sV -T4 "$ip" -oN "scan_${ip}.txt"
 done < ip_list.txt
 
 - Parallel scanning (faster, but more aggressive)
@@ -397,7 +398,7 @@ cat ip_list.txt | xargs -I {} -P 5 nmap -sV -T4 {} -oN "scan_{}.txt"
 
 - Scan based on open ports from previous scan
 open_ports=$(grep "open" previous_scan.txt | cut -d'/' -f1 | sort -u | tr '\n' ',')
-nmap -p $open_ports -sV -T4 192.168.1.0/24
+nmap -p "$open_ports" -sV -T4 192.168.1.0/24
 
 [🔝 Back to Top](#📖-table-of-contents)
 
