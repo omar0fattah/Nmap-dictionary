@@ -2,6 +2,9 @@
 
 A one-page cheat sheet for the most common Nmap tasks. For detailed explanations, see the [full manual](README.md).
 
+> **⚠️ Legal Disclaimer**  
+> These commands are for educational use only. Only scan networks you own or have written permission to test. The author assumes no liability for any illegal or unauthorized use.
+
 ---
 
 ## The 10 Most Useful Commands
