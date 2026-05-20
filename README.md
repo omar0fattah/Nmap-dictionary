@@ -454,3 +454,9 @@ nmap -T0 --scan-delay 30s -p 1-1000 192.168.1.1
 
 - Use decoy scans from legitimate IPs
 nmap -D 8.8.8.8,1.1.1.1,ME 192.168.1.1
+
+---------------------------------------
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
