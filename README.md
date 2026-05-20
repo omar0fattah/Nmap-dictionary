@@ -1,6 +1,10 @@
 # Nmap-dictionary
 Nmap commands from beginner level to advanced level that are categorized in the most simple way 
 
+> **⚠️ Legal Disclaimer**  
+> This guide is for **educational purposes only**. Nmap is a powerful tool. Unauthorized scanning of networks you do not own or have explicit permission to test may be illegal in your jurisdiction. The author assumes no responsibility for misuse or damage caused by these commands. Know the laws where you live. Scan responsibly.
+
+
 > 📄 **Quick Reference:** [One-page cheat sheet](QUICKREF.md) for the most common commands.
 
 ## 📖 Table of Contents
