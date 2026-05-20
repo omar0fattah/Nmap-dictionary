@@ -209,9 +209,9 @@ nmap -sn 192.168.1.0/24 -oG live_hosts.grep
 grep "Up" live_hosts.grep | cut -d' ' -f2 > ip_list.txt
 
 - Step 3: Deep scan each host
-while read ip; do
-    nmap -sV -A -T4 $ip -oN scan_$ip.txt
-done < ip_list.txt
+  while read ip; do
+      nmap -sV -A -T4 "$ip" -oN "scan_${ip}.txt"
+  done < ip_list.txt
 
 - Step 4: Extract interesting data
 grep -E "open|VERSION|OS" scan_*.txt > interesting_results.txt
