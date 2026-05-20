@@ -382,7 +382,7 @@ grep "open" scan.txt | awk '{print $3}' | sort | uniq -c | sort -rn > service_co
 
 ## 15. Scan Automation (multiple networks)
 
-- **Scan multiple subnets from a list**
+- Scan multiple subnets from a list
   ```bash
   while read subnet; do
       nmap -sn "$subnet" -oG "scan_$(echo "$subnet" | tr '/' '_').grep"
