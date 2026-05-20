@@ -45,6 +45,7 @@ Nmap commands from beginner level to advanced level that are categorized in the 
 
 
    ## 1. THE FUNDAMENTALS
+ 
   - Quick port scan with version detection
 nmap -sV -T4 192.168.1.1
 
@@ -62,7 +63,8 @@ nmap -oA scan_name -A -T4 192.168.1.0/24
    
 
    ## 2. NETWORK DISCOVERY 
-      # Ping sweep - find live hosts
+
+- Ping sweep - find live hosts
 nmap -sn 192.168.1.0/24
 
 - ARP ping (works even when ICMP is blocked, needs root)
@@ -97,7 +99,8 @@ nmap -sI zombie_ip 192.168.1.1
 
 
    ## 4. ADVANCED SCANNING TECHNIQUE
-        - TCP Null scan (evade non-stateful firewalls)
+
+  - TCP Null scan (evade non-stateful firewalls)
 nmap -sN 192.168.1.1
 
 - TCP FIN scan
