@@ -12,6 +12,9 @@ nmap -p- -sV -T4 192.168.1.1
 - Aggressive scan (OS, version, scripts, traceroute)
 nmap -A -T4 192.168.1.1
 
+- UDP scan (find DNS, SNMP, other non‑TCP services)
+ nmap -sU 192.168.1.1
+
 - Save everything (normal, XML, grepable)
 nmap -oA scan_name -A -T4 192.168.1.0/24 
    
