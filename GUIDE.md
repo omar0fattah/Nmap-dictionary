@@ -143,3 +143,109 @@ cat ip_list.txt | xargs -I {} -P 5 nmap -sV -T4 {} -oN "scan_{}.txt"
 * The -P 5 runs up to 5 scans at the same time. Increase the number for more speed, but be aware it will generate more noise.
 
 ---
+
+
+## 8. Target-Specific Strategies
+
+|Target Type| Recommended Command| Why|
+|-----|------|------|
+|Web server| `nmap -sV --script http-enum -p 80,443,8080 <ip>` |Version detection + directory enumeration|
+|Windows SMB |`nmap -p 445 --script smb-os-discovery,smb-security-mode <ip>`| OS version + security settings|
+|SSH| `nmap -p 22 --script ssh-auth-methods,ssh-hostkey <ip>` |Authentication methods + host keys|
+|MySQL| `nmap -p 3306 --script mysql-info <ip>` |Version and protocol info|
+|SNMP| `nmap -sU -p 161 --script snmp-community <ip>`| UDP scan + community string detection|
+
+---
+
+## 9. Common Mistakes (and How to Fix Them)
+
+|Mistake| Why It Happens| The Fix|
+|----|-----|-----|
+|Running -sS without sudo |Nmap silently falls back to -sT (TCP Connect)| Always use sudo nmap -sS for SYN scans|
+|Scanning all ports (-p-) on a large subnet |Slow, noisy, generates massive logs| Scan top ports first (--top-ports 1000), then deep scan only interesting hosts|
+|Target is reported "down" but you know it's up |The host blocks ICMP (ping)| Use -Pn to skip host discovery entirely|
+|Your scan is taking forever |Timing template too slow, or scanning UDP| Use -T4 for speed; narrow UDP port range|
+|Forgetting to save output |Didn't use -oA |Always use `-oA scan_name`|
+|Scanning from a fixed IP without decoys| Your real IP is in the logs |Use `-D RND:5` to add decoys|
+
+---
+
+10. Real-World Workflows
+
+Workflow 1: Cautious Discovery (Unknown Network)
+
+```bash
+# Step 1: Slow ping sweep with decoys
+nmap -sn -T2 -D RND:5 192.168.1.0/24 -oA ping_sweep
+
+# Step 2: Extract live IPs
+grep "Up" ping_sweep.grep | cut -d' ' -f2 > live_hosts.txt
+
+# Step 3: Slow SYN scan on live hosts
+while read ip; do
+    sudo nmap -sS -T2 -D RND:5 "$ip" -oN "scan_${ip}.txt"
+done < live_hosts.txt
+```
+
+Workflow 2: Focused Web Server Enumeration
+
+```bash
+# Scan only web ports with version detection and scripts
+sudo nmap -sS -sV -p 80,443,8080 --script http-enum,http-headers,http-title 192.168.1.10 -oA web_scan
+```
+
+Workflow 3: Full Lab Scan (Own Network)
+
+```bash
+# Fast, aggressive scan on your own lab
+sudo nmap -A -T4 -p- 192.168.1.10 -oA full_lab_scan
+```
+
+---
+
+11. Defense (Detecting and Blocking Scans)
+
+Detecting SYN Scans
+
+```bash
+tcpdump -i eth0 'tcp[tcpflags] & (tcp-syn) != 0 and tcp[tcpflags] & (tcp-ack) == 0'
+```
+
+Detecting FIN/NULL/XMAS Scans
+
+```bash
+tcpdump -i eth0 'tcp[tcpflags] & (tcp-fin) != 0'
+tcpdump -i eth0 'tcp[tcpflags] == 0'
+tcpdump -i eth0 'tcp[tcpflags] & (tcp-fin|tcp-urg|tcp-psh) == (tcp-fin|tcp-urg|tcp-psh)'
+```
+
+Rate-Limiting ICMP (Ping) Sweeps
+
+```bash
+iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 1/second --limit-burst 5 -j ACCEPT
+iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
+```
+
+Rate-Limiting TCP Scans
+
+```bash
+iptables -A INPUT -p tcp --syn -m recent --name portscan --set -j DROP
+iptables -A INPUT -p tcp --syn -m recent --name portscan --rcheck --seconds 60 --hitcount 10 -j DROP
+```
+
+---
+
+12. Advanced Topics Summary
+
+Topic Where to Learn More
+NSE script development See README.md#13-nse-script-development
+IPv6 scanning See README.md#11-ip-v6-scanning
+Firewall evasion See README.md#12-firewall-evasion
+Evading modern EDR See README.md#17-evading-modern-edr
+
+---
+
+✅ Guide Completion Note
+
+This guide covers the operational decisions behind Nmap scanning. For a complete command reference, see README.md. For a one-page cheat sheet, see QUICKREF.md. For a beginner tutorial, see TUTORIAL.md.
+
