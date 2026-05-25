@@ -117,7 +117,7 @@ This three-step workflow is faster, quieter, and more professional than scanning
 
 ## 7. Automation Workflows
 
-### Scanning multiple subnets from a list
+- Scanning multiple subnets from a list
 ```bash
 while read subnet; do
     nmap -sn "$subnet" -oG "scan_$(echo "$subnet" | tr '/' '_').grep"
