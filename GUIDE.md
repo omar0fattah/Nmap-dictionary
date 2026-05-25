@@ -170,48 +170,52 @@ cat ip_list.txt | xargs -I {} -P 5 nmap -sV -T4 {} -oN "scan_{}.txt"
 
 ---
 
-10. Real-World Workflows
+## 10. Real-World Workflows
 
-Workflow 1: Cautious Discovery (Unknown Network)
+- **Workflow 1: Cautious Discovery (Unknown Network)**
 
+
+-  Step 1: Slow ping sweep with decoys
 ```bash
-# Step 1: Slow ping sweep with decoys
 nmap -sn -T2 -D RND:5 192.168.1.0/24 -oA ping_sweep
-
-# Step 2: Extract live IPs
+```
+- Step 2: Extract live IPs
+```bash
 grep "Up" ping_sweep.grep | cut -d' ' -f2 > live_hosts.txt
-
-# Step 3: Slow SYN scan on live hosts
+```
+- Step 3: Slow SYN scan on live hosts
+```bash
 while read ip; do
     sudo nmap -sS -T2 -D RND:5 "$ip" -oN "scan_${ip}.txt"
 done < live_hosts.txt
 ```
 
-Workflow 2: Focused Web Server Enumeration
+- **Workflow 2: Focused Web Server Enumeration**
 
-```bash
-# Scan only web ports with version detection and scripts
-sudo nmap -sS -sV -p 80,443,8080 --script http-enum,http-headers,http-title 192.168.1.10 -oA web_scan
-```
+  -  Scan only web ports with version detection and scripts
 
-Workflow 3: Full Lab Scan (Own Network)
+    ```bash
+    sudo nmap -sS -sV -p 80,443,8080 --script http-enum,http-headers,http-title 192.168.1.10 -oA web_scan
+    ```
 
-```bash
-# Fast, aggressive scan on your own lab
-sudo nmap -A -T4 -p- 192.168.1.10 -oA full_lab_scan
-```
+- **Workflow 3: Full Lab Scan (Own Network)**
+
+    - Fast, aggressive scan on your own lab
+     ```bash
+     sudo nmap -A -T4 -p- 192.168.1.10 -oA full_lab_scan
+     ```
 
 ---
 
-11. Defense (Detecting and Blocking Scans)
+## 11. Defense (Detecting and Blocking Scans)
 
-Detecting SYN Scans
+- **Detecting SYN Scans**
 
 ```bash
 tcpdump -i eth0 'tcp[tcpflags] & (tcp-syn) != 0 and tcp[tcpflags] & (tcp-ack) == 0'
 ```
 
-Detecting FIN/NULL/XMAS Scans
+- **Detecting FIN/NULL/XMAS Scans**
 
 ```bash
 tcpdump -i eth0 'tcp[tcpflags] & (tcp-fin) != 0'
@@ -219,14 +223,14 @@ tcpdump -i eth0 'tcp[tcpflags] == 0'
 tcpdump -i eth0 'tcp[tcpflags] & (tcp-fin|tcp-urg|tcp-psh) == (tcp-fin|tcp-urg|tcp-psh)'
 ```
 
-Rate-Limiting ICMP (Ping) Sweeps
+- **Rate-Limiting ICMP (Ping) Sweeps**
 
 ```bash
 iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 1/second --limit-burst 5 -j ACCEPT
 iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
 ```
 
-Rate-Limiting TCP Scans
+- **Rate-Limiting TCP Scans**
 
 ```bash
 iptables -A INPUT -p tcp --syn -m recent --name portscan --set -j DROP
@@ -235,13 +239,14 @@ iptables -A INPUT -p tcp --syn -m recent --name portscan --rcheck --seconds 60 -
 
 ---
 
-12. Advanced Topics Summary
+## 12. Advanced Topics Summary
 
-Topic Where to Learn More
-NSE script development See README.md#13-nse-script-development
-IPv6 scanning See README.md#11-ip-v6-scanning
-Firewall evasion See README.md#12-firewall-evasion
-Evading modern EDR See README.md#17-evading-modern-edr
+|Topic |Where to Learn More|
+|----|----|
+|NSE script development |See README.md#13-nse-script-development|
+|IPv6 scanning| See README.md#11-ip-v6-scanning|
+|Firewall evasion| See README.md#12-firewall-evasion|
+|Evading modern EDR |See README.md#17-evading-modern-edr|
 
 ---
 
