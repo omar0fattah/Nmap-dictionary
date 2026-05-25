@@ -51,6 +51,7 @@ This three-step workflow is faster, quieter, and more professional than scanning
 | Find service versions | `nmap -sV` | **Third step** after you find open ports. More intrusive. |
 
 [🔝 Back to Top](#top)
+
 ---
 
 ## 2. Scan Types (What Each One Does)
@@ -74,6 +75,7 @@ This three-step workflow is faster, quieter, and more professional than scanning
 > **UDP scanning is slow and unreliable.** Most UDP services don't respond to empty probes. Use `-sU` only when you're specifically looking for UDP services.
 
 [🔝 Back to Top](#top)
+
 ---
 
 ## 3. Timing Templates (Speed vs. Stealth)
@@ -93,6 +95,7 @@ This three-step workflow is faster, quieter, and more professional than scanning
 - **Never use `-T5`** unless you're trying to trigger alerts (or don't care if you do).
 
 [🔝 Back to Top](#top)
+
 ---
 
 ## 4. Evasion Techniques (When to Use Them)
@@ -108,6 +111,7 @@ This three-step workflow is faster, quieter, and more professional than scanning
 > **Important:** Modern EDR (Endpoint Detection and Response) is not fooled by basic evasion. Use these techniques as one layer, not your only defense.
 
 [🔝 Back to Top](#top)
+
 ---
 
 ## 5. Detection (What Defenders See)
@@ -123,6 +127,7 @@ This three-step workflow is faster, quieter, and more professional than scanning
 **If you're defending:** Look for bursts of SYN packets, ICMP echo requests across a whole subnet, or connections to many ports on a single host in a short time.
 
 [🔝 Back to Top](#top)
+
 ---
 
 ## 6. Output and Exfiltration
@@ -137,6 +142,7 @@ This three-step workflow is faster, quieter, and more professional than scanning
 **Pro tip:** Always save your scans with `-oA`. You'll thank yourself later when you need to reference or share results.
 
 [🔝 Back to Top](#top)
+
 ---
 
 ## 7. Automation Workflows
@@ -167,6 +173,7 @@ cat ip_list.txt | xargs -I {} -P 5 nmap -sV -T4 {} -oN "scan_{}.txt"
 * The -P 5 runs up to 5 scans at the same time. Increase the number for more speed, but be aware it will generate more noise.
 
 [🔝 Back to Top](#top)
+
 ---
 
 
@@ -181,6 +188,7 @@ cat ip_list.txt | xargs -I {} -P 5 nmap -sV -T4 {} -oN "scan_{}.txt"
 |SNMP| `nmap -sU -p 161 --script snmp-community <ip>`| UDP scan + community string detection|
 
 [🔝 Back to Top](#top)
+
 ---
 
 ## 9. Common Mistakes (and How to Fix Them)
@@ -195,6 +203,7 @@ cat ip_list.txt | xargs -I {} -P 5 nmap -sV -T4 {} -oN "scan_{}.txt"
 |Scanning from a fixed IP without decoys| Your real IP is in the logs |Use `-D RND:5` to add decoys|
 
 [🔝 Back to Top](#top)
+
 ---
 
 ## 10. Real-World Workflows
@@ -233,6 +242,7 @@ done < live_hosts.txt
      ```
 
 [🔝 Back to Top](#top)
+
 ---
 
 ## 11. Defense (Detecting and Blocking Scans)
@@ -266,6 +276,7 @@ iptables -A INPUT -p tcp --syn -m recent --name portscan --rcheck --seconds 60 -
 ```
 
 [🔝 Back to Top](#top)
+
 ---
 
 ## 12. Advanced Topics Summary
@@ -278,9 +289,10 @@ iptables -A INPUT -p tcp --syn -m recent --name portscan --rcheck --seconds 60 -
 |Evading modern EDR |See README.md#17-evading-modern-edr|
 
 [🔝 Back to Top](#top)
+
 ---
 
 ✅ Guide Completion Note
 
-This guide covers the operational decisions behind Nmap scanning. For a complete command reference, see README.md. For a one-page cheat sheet, see QUICKREF.md. For a beginner tutorial, see TUTORIAL.md.
+This guide covers the operational decisions behind Nmap scanning. For a complete command reference, see [README.md](README.md). For a one-page cheat sheet, see [QUICKREF.md](QUICKREF.md). For a beginner tutorial, see [TUTORIAL.md](TUTORIAL.md).
 
