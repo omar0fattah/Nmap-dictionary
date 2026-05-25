@@ -123,3 +123,23 @@ while read subnet; do
     nmap -sn "$subnet" -oG "scan_$(echo "$subnet" | tr '/' '_').grep"
 done < subnets.txt
 ```
+* Use this when you have a file (subnets.txt) containing one subnet per line (e.g., 192.168.1.0/24).
+
+- Deep scanning all hosts from a previous scan
+
+```bash
+while read ip; do
+    nmap -sV -T4 "$ip" -oN "scan_${ip}.txt"
+done < ip_list.txt
+```
+
+* Use this after a ping sweep (-sn) to scan only the hosts that replied.
+
+- Parallel scanning (faster, noisier)
+
+```bash
+cat ip_list.txt | xargs -I {} -P 5 nmap -sV -T4 {} -oN "scan_{}.txt"
+```
+* The -P 5 runs up to 5 scans at the same time. Increase the number for more speed, but be aware it will generate more noise.
+
+---
