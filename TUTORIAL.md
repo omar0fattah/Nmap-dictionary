@@ -26,7 +26,7 @@ This tutorial assumes you know nothing about Nmap. By the end, you'll be able to
 
 ## 1. What is Nmap?
 
-Nmap (Network Mapper) is a tool that sends packets to computers and listens for replies. It answers:
+- **Nmap (Network Mapper) is a tool that sends packets to computers and listens for replies. It answers:**
 
 - Which computers are alive on a network?
 - What doors (ports) are open on those computers?
@@ -35,7 +35,7 @@ Nmap (Network Mapper) is a tool that sends packets to computers and listens for 
 
 **Think of it like this:** Your computer has 65,535 doors (ports). Some doors are open for business (web server, file sharing). Some doors are closed. Some doors have guards (firewalls). Nmap knocks on every door and reports back.
 
-For a complete list of commands, see the [README.md](README.md). For a one-page cheat sheet, see [QUICKREF.md](QUICKREF.md). For strategy and depth, see [GUIDE.md](GUIDE.md).
+- For a complete list of commands, see the [README.md](README.md). For a one-page cheat sheet, see [QUICKREF.md](QUICKREF.md). For strategy and depth, see [GUIDE.md](GUIDE.md).
 
 ---
 
@@ -47,35 +47,35 @@ sudo apt update
 sudo apt install nmap -y
 ```
 
-On macOS
+- **On macOS**
 
 ```bash
 brew install nmap
 ```
 
-On Windows
+- **On Windows**
 
-Download the installer from nmap.org and run it.
+- Download the installer from https://nmap.org/ and run it.
 
-Verify installation
+- **Verify installation**
 
 ```bash
 nmap --version
 ```
 
-You should see output like: Nmap version 7.xx
+- You should see output like: Nmap version 7.xx
 
 ---
 
-3. Your First Scan
+## 3. Your First Scan
 
-Open a terminal. Type:
+- **Open a terminal. Type:**
 
 ```bash
 nmap scanme.nmap.org
 ```
 
-This scans a test server that Nmap.org provides for practice. You'll see output like:
+- This scans a test server that Nmap.org provides for practice. You'll see output like:
 
 ```
 Starting Nmap 7.xx ( https://nmap.org )
@@ -91,21 +91,22 @@ PORT     STATE    SERVICE
 Nmap done: 1 IP address (1 host up) scanned in 3.42 seconds
 ```
 
-What you just learned: Nmap scanned the most common 1000 ports on that server and found 4 open ports (22, 80, 9929, 31337).
+- What you just learned: Nmap scanned the most common 1000 ports on that server and found 4 open ports (22, 80, 9929, 31337).
 
 ---
 
-4. Understanding Port States
+## 4. Understanding Port States
 
-After a scan, each port has a state:
+- **After a scan, each port has a state:**
 
-State Meaning
-open A service is listening. The door is open.
-closed No service is listening, but the computer is reachable.
-filtered Something (firewall) blocked the probe. Nmap can't tell if it's open or closed.
-unfiltered The port is reachable but Nmap can't tell if it's open or closed (rare).
+|State|Meaning|
+|----|----|
+|open |A service is listening. The door is open.|
+|closed| No service is listening, but the computer is reachable.|
+|filtered| Something (firewall) blocked the probe. Nmap can't tell if it's open or closed.|
+|unfiltered |The port is reachable but Nmap can't tell if it's open or closed (rare).|
 
-Why this matters: open ports are your entry points. filtered ports mean a firewall is protecting them.
+- Why this matters: open ports are your entry points. filtered ports mean a firewall is protecting them.
 
 ---
 
