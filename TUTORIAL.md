@@ -1,5 +1,7 @@
 # Nmap Tutorial: From Zero to Network Scanner
 
+<a name="top"></a>
+
 This tutorial assumes you know nothing about Nmap. By the end, you'll be able to scan networks, interpret results, and understand the risks.
 
 > **⚠️ Legal Disclaimer**  
@@ -37,6 +39,8 @@ This tutorial assumes you know nothing about Nmap. By the end, you'll be able to
 
 - For a complete list of commands, see the [README.md](README.md). For a one-page cheat sheet, see [QUICKREF.md](QUICKREF.md). For strategy and depth, see [GUIDE.md](GUIDE.md).
 
+[🔝 Back to Top](#top)
+
 ---
 
 ## 2. Installing Nmap
@@ -64,6 +68,8 @@ nmap --version
 ```
 
 - You should see output like: Nmap version 7.xx
+
+[🔝 Back to Top](#top)
 
 ---
 
@@ -93,6 +99,8 @@ Nmap done: 1 IP address (1 host up) scanned in 3.42 seconds
 
 - What you just learned: Nmap scanned the most common 1000 ports on that server and found 4 open ports (22, 80, 9929, 31337).
 
+[🔝 Back to Top](#top)
+
 ---
 
 ## 4. Understanding Port States
@@ -107,6 +115,8 @@ Nmap done: 1 IP address (1 host up) scanned in 3.42 seconds
 |unfiltered |The port is reachable but Nmap can't tell if it's open or closed (rare).|
 
 - Why this matters: open ports are your entry points. filtered ports mean a firewall is protecting them.
+
+[🔝 Back to Top](#top)
 
 ---
 
@@ -132,6 +142,8 @@ nmap 192.168.1.0/24
 
 - What you'll see: A list of IP addresses, open ports, and services. You might see your router, your phone, other computers.
 
+[🔝 Back to Top](#top)
+
 ---
 
 ## 6. Service Version Detection
@@ -154,6 +166,8 @@ PORT     STATE SERVICE    VERSION
 
 - Why this matters: Different versions have different vulnerabilities. Knowing the version tells you what exploits to try.
 
+[🔝 Back to Top](#top)
+
 ---
 
 ## 7. Ping Sweeps (Finding Live Hosts)
@@ -167,6 +181,8 @@ nmap -sn 192.168.1.0/24
 - This pings every address and tells you which respond. It's fast and quiet.
 
 - Why this matters: Why scan 254 addresses for open ports when only 10 are alive? Ping sweep first, then scan only the live ones.
+
+[🔝 Back to Top](#top)
 
 ---
 
@@ -194,6 +210,8 @@ nmap -p- 192.168.1.1
 
 - Why this matters: Attackers (and defenders) often check the top 1000 ports first. Important services sometimes hide on unusual ports.
 
+[🔝 Back to Top](#top)
+
 ---
 
 ## 9. Output and Saving Results
@@ -217,6 +235,8 @@ cat my_scan.nmap
 ```
 
 - Why this matters: Later, you'll want to compare scans or share results. Saving output is a professional habit.
+
+[🔝 Back to Top](#top)
 
 ---
 
@@ -251,6 +271,8 @@ nmap -T4 -sV 192.168.1.1
     · On your own lab or trusted network → use -T4
     · Never use -T5 unless you want to trigger every alarm
 
+[🔝 Back to Top](#top)
+
 ---
 
 ## 11. Real-World Workflow
@@ -275,6 +297,8 @@ nmap -T4 -sV 192.168.1.1
 
 - This workflow is faster, quieter, and more professional than scanning everything blindly.
 
+[🔝 Back to Top](#top)
+
 ---
 
 ## 12. Next Steps
@@ -282,17 +306,17 @@ nmap -T4 -sV 192.168.1.1
 **You now know enough to scan networks and understand the results. To go further:**
 
 · Explore the [README.md](README.md) for every command
-· Use the QUICKREF.md as a daily cheat sheet
-· Read the GUIDE.md for operational depth and strategy
+· Use the [QUICKREF.md](QUICKREF.md) as a daily cheat sheet
+· Read the [GUIDE.md](GUIDE.md) for operational depth and strategy
 · Practice on your own lab (use VirtualBox + Metasploitable or VulnHub)
 · Never scan systems you don't own or have permission to test
 
-Remember: Nmap is a tool. Like any tool, it can be used for good or for harm. Use it to learn, to defend, and to understand. Not to break.
+Remember: Nmap is a tool. Like any tool, it can be used for good or for harm. Use it to learn, to defend, and to understand. to break and learn.
 
-🔝 Back to Top
+[🔝 Back to Top](#top)
 
 ---
 
-✅ Tutorial Completion Note
+### ✅ Tutorial Completion Note
 
-You've completed the tutorial. You can now scan networks, interpret results, and save your work. You're not an expert yet, but you have the foundation.
+**You've completed the tutorial. You can now scan networks, interpret results, and save your work. You're not an expert yet, but you have the foundation.**
